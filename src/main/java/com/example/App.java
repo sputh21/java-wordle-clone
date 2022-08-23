@@ -44,13 +44,14 @@ public class App
     Scanner scan = new Scanner(System.in);
 
     String guess="";
-    int count=0;
+    int count=1;
 
     List<String> lettsInWord = new ArrayList<>();
 
     while(chances!=0){
         System.out.println("These are the letters you have guessed that are in the word");
         System.out.println(lettsInWord);
+        System.out.println("");
         System.out.println("You have " + chances + " left to guess.");
         chances--;
         System.out.println("Take your guess of a word");
@@ -61,6 +62,9 @@ public class App
         if(guess.equals(word)){System.out.println("You got it!");break;}
         else{
         strProcess.checkLetters(word,lettsInWord,guess);
+        System.out.println("");
+        System.out.println("These have been your guesses so far:");
+        System.out.println(wordList);
         }
     }
 
