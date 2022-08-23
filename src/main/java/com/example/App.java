@@ -6,8 +6,14 @@ import org.json.simple.parser.JSONParser;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
 import java.net.http.*;
 import java.net.URI;
+
+import java.util.*;
+
 
 /**
  * Hello world!
@@ -24,10 +30,43 @@ public class App
 		.header("X-RapidAPI-Host", "random-words5.p.rapidapi.com")
 		.method("GET", HttpRequest.BodyPublishers.noBody())
 		.build();
-HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    System.out.println(response.body());
+    HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    
     String word = response.body();
-    word.replace("[","");
+    
+    word=word.replace("[\"", "");
+    word=word.replace("\"]", "");
+    
+    Map<String, Integer> wordList = new HashMap<>();
+
+    int chances=4;
+
+    Scanner scan = new Scanner(System.in);
+
+    String guess="";
+    int count=0;
+
+    List<String> lettsInWord = new ArrayList<>();
+
+    while(chances!=0){
+        System.out.println("These are the letters you have guessed that are in the word");
+        System.out.println(lettsInWord);
+        System.out.println("You have " + chances + " left to guess.");
+        chances--;
+        System.out.println("Take your guess of a word");
+        System.out.println(word);
+        guess=scan.nextLine();
+        wordList.put(guess, count);
+        count++;
+        if(guess.equals(word)){System.out.println("You got it!");break;}
+        else{
+        strProcess.checkLetters(word,lettsInWord,guess);
+        }
+    }
+
+
+
+
     
     
     
